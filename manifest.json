@@ -1,7 +1,7 @@
 {
   "name": "Office Manager AI Elite 3D",
   "short_name": "Lovely Manager",
-  "description": "스마트 오피스 휴무 및 일정 관리 시스템",
+  "description": "스마트 오피스 일정 관리 시스템 v5.3.2",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#fdf2f8",

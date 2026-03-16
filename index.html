@@ -2,19 +2,17 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <!-- 화면 확대 제한(user-scalable=no, maximum-scale=1.0) 설정을 제거하여 자유로운 확대를 허용함 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#fb7185">
     
-    <!-- 안드로이드 홈 화면 예쁜 달력 아이콘 설정 -->
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="https://cdn-icons-png.flaticon.com/512/1048/1048953.png">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048953.png">
     
-    <title>Office Manager AI Elite 3D v5.3.0</title>
+    <title>Office Manager AI Elite 3D v5.3.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
@@ -32,7 +30,6 @@
             font-family: 'Pretendard', sans-serif;
             background-color: #f1f5f9;
             -webkit-tap-highlight-color: transparent;
-            overflow: hidden;
             margin: 0; width: 100vw; height: 100dvh;
             display: flex; justify-content: center; align-items: center;
         }
@@ -42,82 +39,47 @@
             overflow: hidden;
         }
         .glass { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-bottom: 1px solid rgba(251, 113, 133, 0.1); }
-        
         .header-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 5px 8px 0 8px; }
         .month-display { display: flex; align-items: center; gap: 8px; background: white; padding: 4px 14px; border-radius: 1rem; border: 2px solid #fce7f3; }
         .month-display h2 { font-size: 1.4rem; font-weight: 900; color: #1e293b; letter-spacing: -0.05em; }
-
-        .cyber-badge {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border: 2.5px solid var(--accent-rose);
-            padding: 5px 12px; border-radius: 0.8rem; flex-shrink: 0;
-        }
+        .cyber-badge { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 2.5px solid var(--accent-rose); padding: 5px 12px; border-radius: 0.8rem; flex-shrink: 0; }
         .cyber-badge span { font-size: 10px; font-weight: 900; color: white; font-style: italic; white-space: nowrap; text-transform: uppercase; }
-
         .view-container { flex: 1; display: flex; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .view-page { width: 100%; height: 100%; flex-shrink: 0; scroll-snap-align: start; overflow-y: auto; padding-bottom: 90px; }
         .unified-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--grid-gap); width: calc(100% - 16px); margin: 0 auto; }
         .weekday-label { text-align: center; font-weight: 900; font-size: 10px; color: #fb7185; opacity: 0.6; padding: 8px 0; }
         .calendar-card { background: linear-gradient(145deg, #fce7f3, #e9d5ff); border-radius: 1.2rem; padding: 4px; margin: 0 8px; }
-        
-        .day-cell { 
-            height: 95px; background-color: white; padding: 4px; border-radius: 0.6rem; 
-            border-bottom: 4px solid #cbd5e1; transition: all 0.2s; position: relative; overflow: hidden;
-        }
+        .day-cell { height: 95px; background-color: white; padding: 4px; border-radius: 0.6rem; border-bottom: 4px solid #cbd5e1; transition: all 0.2s; position: relative; overflow: hidden; }
         .is-today { border-right: 2px solid #6ee7b7; border-bottom-color: #10b981; }
-        
         .entry-row { display: flex; align-items: center; gap: 2px; margin-bottom: 2px; border-radius: 2px; padding: 1px; }
         .color-strip { width: 3px; height: 10px; border-radius: 1px; flex-shrink: 0; }
         .entry-name-label { font-size: 0.6rem; font-weight: 900; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .name-bg-0 { background-color: #fce7f3 !important; }
-        .name-bg-1 { background-color: #f3e8ff !important; }
-        .name-bg-2 { background-color: #d1fae5 !important; }
-        .name-bg-3 { background-color: #ffedd5 !important; }
-
-        .status-1 { background-color: var(--color-off) !important; }
-        .status-2 { background-color: var(--color-am) !important; }
-        .status-3 { background-color: var(--color-pm) !important; }
-        .status-4 { background-color: var(--color-etc) !important; }
-
+        .name-bg-0 { background-color: #fce7f3 !important; } .name-bg-1 { background-color: #f3e8ff !important; }
+        .name-bg-2 { background-color: #d1fae5 !important; } .name-bg-3 { background-color: #ffedd5 !important; }
+        .status-1 { background-color: var(--color-off) !important; } .status-2 { background-color: var(--color-am) !important; }
+        .status-3 { background-color: var(--color-pm) !important; } .status-4 { background-color: var(--color-etc) !important; }
         .filter-btn { padding: 4px 10px; border-radius: 0.5rem; font-size: 10px; font-weight: 900; background: white; border: 1.5px solid #f1f5f9; white-space: nowrap; }
         .filter-active { border-color: var(--accent-rose) !important; color: #000 !important; box-shadow: 0 2px 6px rgba(251, 113, 133, 0.2); }
-        
         #globalLoader { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
         .loader-ring { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--accent-rose); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        
         .legend-area { display: flex; justify-content: center; gap: 10px; margin-top: 12px; padding: 10px; background: white; border-radius: 0.8rem; margin-left: 8px; margin-right: 8px; border: 1px solid #f1f5f9; }
         .legend-item { display: flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 900; color: #64748b; }
         .legend-strip { width: 4px; height: 10px; border-radius: 1px; }
-
-        .dot { width: 6px; height: 6px; border-radius: 50%; background: #e2e8f0; }
-        .dot.active { background: var(--accent-rose); width: 16px; }
-
+        .dot { width: 6px; height: 6px; border-radius: 50%; background: #e2e8f0; } .dot.active { background: var(--accent-rose); width: 16px; }
         .memo-check { position: absolute; top: 2px; right: 2px; font-size: 9px; color: #10b981; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div id="globalLoader">
-        <div class="loader-ring"></div>
-        <div class="text-white font-black text-sm" id="loaderStatus">Syncing...</div>
-    </div>
-
+    <div id="globalLoader"><div class="loader-ring"></div><div class="text-white font-black text-sm" id="loaderStatus">Syncing...</div></div>
     <div class="app-wrapper">
         <header class="glass sticky top-0 z-[100] px-3 pt-[calc(10px+var(--ios-safe-top))] pb-3 border-b flex flex-col gap-2">
             <div class="header-row">
-                <div class="month-display">
-                    <button onclick="window.changeMonth(-1)" class="active:scale-90 text-rose-400 font-bold text-lg">◀</button>
-                    <h2 id="monthTitle">2026.03</h2>
-                    <button onclick="window.changeMonth(1)" class="active:scale-90 text-rose-400 font-bold text-lg">▶</button>
-                </div>
+                <div class="month-display"><button onclick="window.changeMonth(-1)" class="active:scale-90 text-rose-400 font-bold text-lg">◀</button><h2 id="monthTitle">2026.03</h2><button onclick="window.changeMonth(1)" class="active:scale-90 text-rose-400 font-bold text-lg">▶</button></div>
                 <div class="cyber-badge"><span>Lovely Manager</span></div>
             </div>
-            <div id="filterBar" class="flex gap-1 overflow-x-auto no-scrollbar py-1">
-                <button onclick="window.setFilter('all')" id="filter-all" class="filter-btn filter-active">전체</button>
-            </div>
+            <div id="filterBar" class="flex gap-1 overflow-x-auto no-scrollbar py-1"><button onclick="window.setFilter('all')" id="filter-all" class="filter-btn filter-active">전체</button></div>
         </header>
-
         <main class="view-container no-scrollbar" id="viewContainer">
             <section class="view-page" id="pageCalendar">
                 <div class="unified-grid">
@@ -131,24 +93,11 @@
                     <div class="legend-item"><div class="legend-strip status-4"></div><span>기타</span></div>
                 </div>
             </section>
-
-            <section class="view-page px-4 py-6 bg-white" id="pageStats">
-                <h3 class="font-black text-lg mb-4 text-slate-800 ml-1">📅 전사 현황</h3>
-                <div id="statsContainer" class="space-y-1.5"></div>
-            </section>
-
-            <section class="view-page px-5 py-6 bg-slate-50" id="pageMemo">
-                <h3 class="font-black text-xl mb-4 text-slate-800 italic">📌 통합 메모장</h3>
-                <div id="memoListView" class="space-y-3">
-                    <div class="p-10 text-center text-slate-400 font-bold text-sm">등록된 메모가 없습니다.</div>
-                </div>
-            </section>
+            <section class="view-page px-4 py-6 bg-white" id="pageStats"><h3 class="font-black text-lg mb-4 text-slate-800 ml-1">📅 전사 현황</h3><div id="statsContainer" class="space-y-1.5"></div></section>
+            <section class="view-page px-5 py-6 bg-slate-50" id="pageMemo"><h3 class="font-black text-xl mb-4 text-slate-800 italic">📌 통합 메모장</h3><div id="memoListView" class="space-y-3"><div class="p-10 text-center text-slate-400 font-bold text-sm">등록된 메모가 없습니다.</div></div></section>
         </main>
-
         <footer class="glass border-t px-6 py-3 shrink-0">
-            <div class="flex justify-center gap-2 mb-3">
-                <div class="dot active" id="dot0"></div><div class="dot" id="dot1"></div><div class="dot" id="dot2"></div>
-            </div>
+            <div class="flex justify-center gap-2 mb-3"><div class="dot active" id="dot0"></div><div class="dot" id="dot1"></div><div class="dot" id="dot2"></div></div>
             <div class="flex justify-around items-center">
                 <button onclick="window.scrollToPage(0)" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">달력</span></button>
                 <button onclick="window.scrollToPage(1)" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">현황</span></button>
@@ -157,11 +106,8 @@
             </div>
         </footer>
     </div>
-
-    <!-- Modals -->
     <div id="overlay" class="fixed inset-0 bg-black/60 hidden z-[900]" onclick="window.closeAllModals()"></div>
-    
-    <div id="choiceSheet" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-8 transform translate-y-full transition-all duration-300 z-[1000] shadow-2xl mx-auto max-w-[430px]">
+    <div id="choiceSheet" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white rounded-t-[2.5rem] p-8 transform translate-y-full transition-all duration-300 z-[1000]">
         <h3 id="choiceDateTitle" class="text-center font-black text-lg mb-6 text-slate-800 italic">Action Choice</h3>
         <div class="flex flex-col gap-3">
             <button onclick="window.goToSetup()" class="py-4 bg-black text-white rounded-2xl font-black">🎀 일정 및 메모 설정</button>
@@ -170,408 +116,51 @@
             <button onclick="window.closeAllModals()" class="py-2 text-slate-400 text-xs font-bold uppercase">Close</button>
         </div>
     </div>
-
-    <div id="inputSheet" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] glass rounded-t-[2.5rem] p-6 transform translate-y-full transition-all duration-500 z-[1011] max-h-[90dvh] overflow-y-auto no-scrollbar bottom-sheet">
+    <div id="inputSheet" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] glass rounded-t-[2.5rem] p-6 transform translate-y-full transition-all duration-500 z-[1011] max-h-[90dvh] overflow-y-auto no-scrollbar">
         <h3 class="text-center font-black mb-6 text-slate-800">데이터 입력</h3>
         <div class="space-y-5">
             <div class="grid grid-cols-2 gap-2" id="modalNameList"></div>
             <div class="grid grid-cols-4 gap-1">
-                <select id="offSelect" onchange="window.syncSelection(1)" class="p-2 bg-red-500 text-white font-bold rounded-xl text-[10px] appearance-none text-center">
-                    <option value="">휴무▼</option>
-                    <option value="일반">일반</option><option value="연차">연차</option><option value="감정">감정</option><option value="보상">보상</option><option value="병가">병가</option><option value="경조">경조</option><option value="난임">난임</option>
-                </select>
+                <select id="offSelect" onchange="window.syncSelection(1)" class="p-2 bg-red-500 text-white font-bold rounded-xl text-[10px] appearance-none text-center outline-none"><option value="">휴무▼</option><option value="일반">일반</option><option value="연차">연차</option><option value="감정">감정</option><option value="보상">보상</option><option value="병가">병가</option><option value="경조">경조</option><option value="난임">난임</option></select>
                 <button onclick="window.syncSelection(2)" id="btnAM" class="bg-amber-400 text-white font-bold rounded-xl text-[10px] py-3">오전</button>
                 <button onclick="window.syncSelection(3)" id="btnPM" class="bg-blue-500 text-white font-bold rounded-xl text-[10px] py-3">오후</button>
-                <select id="etcSelect" onchange="window.syncSelection(4)" class="p-2 bg-slate-400 text-white font-bold rounded-xl text-[10px] appearance-none text-center">
-                    <option value="">기타▼</option>
-                    <option value="본사교육">본사교육</option><option value="노조교육">노조교육</option><option value="영업회의">영업회의</option><option value="워크샵">워크샵</option>
-                </select>
+                <select id="etcSelect" onchange="window.syncSelection(4)" class="p-2 bg-slate-400 text-white font-bold rounded-xl text-[10px] appearance-none text-center outline-none"><option value="">기타▼</option><option value="본사교육">본사교육</option><option value="노조교육">노조교육</option><option value="영업회의">영업회의</option><option value="워크샵">워크샵</option></select>
             </div>
-            <div>
-                <input type="text" id="memoInput" placeholder="간단한 메모 입력..." class="w-full px-4 py-3 bg-slate-50 border-2 border-transparent rounded-xl font-bold text-sm outline-none focus:border-rose-300">
-            </div>
+            <div><input type="text" id="memoInput" placeholder="간단한 메모 입력..." class="w-full px-4 py-3 bg-slate-50 border-2 border-transparent rounded-xl font-bold text-sm outline-none focus:border-rose-300"></div>
             <button onclick="window.addCurrentToPending()" class="w-full py-4 bg-emerald-500 text-white font-black rounded-2xl shadow-md">목록에 추가 ✨</button>
             <div id="pendingList" class="flex flex-wrap gap-2 p-4 bg-slate-50/50 rounded-2xl border-2 border-dashed border-slate-200 min-h-[50px]"></div>
             <div class="grid grid-cols-2 gap-3"><button onclick="window.saveAllPending()" class="py-4 bg-slate-900 text-white rounded-2xl font-black">저장</button><button onclick="window.closeAllModals()" class="py-4 bg-slate-100 rounded-2xl font-black">취소</button></div>
         </div>
     </div>
-
-    <div id="detailSheet" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-10 transform translate-y-full transition-all duration-300 z-[1002] max-h-[92vh] overflow-y-auto no-scrollbar shadow-2xl mx-auto max-w-[430px]">
-        <h3 id="detailDateTitle" class="text-xl font-black text-center text-slate-800 mb-8 italic">날짜 상세 분석</h3>
-        <div id="detailTableContainer" class="space-y-4 mb-10"></div>
-        <button onclick="window.closeAllModals()" class="w-full py-5 bg-black text-white rounded-2xl font-black text-lg">닫기</button>
-    </div>
-
-    <div id="nameModal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[2000] p-4">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-[320px]">
-            <h3 class="text-xl font-black mb-6 text-center text-slate-800">팀원 관리</h3>
-            <div class="space-y-2 mb-6 max-h-[45vh] overflow-y-auto no-scrollbar" id="nameEditContainer"></div>
-            <button onclick="window.applyNameChanges()" class="w-full py-4 bg-rose-500 text-white rounded-2xl font-black">변경사항 저장</button>
-            <button onclick="window.closeNameModal()" class="w-full py-2 mt-2 text-slate-400 font-bold text-xs uppercase text-center">Back</button>
-        </div>
-    </div>
-
+    <div id="detailSheet" class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white rounded-t-[2.5rem] p-10 transform translate-y-full transition-all duration-300 z-[1002] max-h-[92vh] overflow-y-auto no-scrollbar shadow-2xl"><h3 id="detailDateTitle" class="text-xl font-black text-center text-slate-800 mb-8 italic">날짜 상세 분석</h3><div id="detailTableContainer" class="space-y-4 mb-10"></div><button onclick="window.closeAllModals()" class="w-full py-5 bg-black text-white rounded-2xl font-black text-lg">닫기</button></div>
+    <div id="nameModal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-[2000] p-4"><div class="bg-white rounded-3xl p-6 w-full max-w-[320px]"><h3 class="text-xl font-black mb-6 text-center text-slate-800">팀원 관리</h3><div class="space-y-2 mb-6 max-h-[45vh] overflow-y-auto no-scrollbar" id="nameEditContainer"></div><button onclick="window.applyNameChanges()" class="w-full py-4 bg-rose-500 text-white rounded-2xl font-black">변경사항 저장</button><button onclick="window.closeNameModal()" class="w-full py-2 mt-2 text-slate-400 font-bold text-xs uppercase text-center">Back</button></div></div>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const LOCAL_DB_KEY = 'OFFICE_MANAGER_DEVICE_RECORDS_V3';
-        const LOCAL_SETTINGS_KEY = 'OFFICE_MANAGER_DEVICE_SETTINGS_V3';
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'office-manager-elite-3d';
-
-        let members = ['김혜진', '이민준', '박지성', '최지우'];
-        let records = {};
-        let year = new Date().getFullYear();
-        let month = new Date().getMonth();
-        let selectedDayKey = '';
-        let currentFilter = 'all';
-        let tempMember = null, tempType = null, tempSub = "", pendingRecords = [];
-        let auth, db;
-
-        const toggleLoader = (show, text = "Syncing...") => {
-            const l = document.getElementById('globalLoader');
-            const t = document.getElementById('loaderStatus');
-            if(l && t) { t.innerText = text; l.style.display = show ? 'flex' : 'none'; }
-        };
-
-        window.scrollToPage = (idx) => {
-            const container = document.getElementById('viewContainer');
-            if(!container) return;
-            container.scrollTo({ left: idx * container.clientWidth, behavior: 'smooth' });
-            [0,1,2].forEach(i => {
-                const dot = document.getElementById(`dot${i}`);
-                if(dot) dot.classList.toggle('active', i===idx);
-            });
-        };
-
-        window.changeMonth = (v) => {
-            month += v;
-            if(month > 11) { month = 0; year++; }
-            else if(month < 0) { month = 11; year--; }
-            window.render();
-        };
-
-        window.setFilter = (f) => {
-            currentFilter = f;
-            window.render();
-        };
-
-        window.closeAllModals = () => {
-            document.querySelectorAll('#choiceSheet, #inputSheet, #nameModal, #detailSheet').forEach(s => {
-                s.classList.add('translate-y-full');
-            });
-            document.getElementById('overlay').classList.add('hidden');
-        };
-
-        window.openChoiceModal = (k, d) => {
-            selectedDayKey = k;
-            const title = document.getElementById('choiceDateTitle');
-            if(title) title.innerText = `${month+1}월 ${d}일 Action ✨`;
-            
-            document.getElementById('overlay').classList.remove('hidden');
-            const sheet = document.getElementById('choiceSheet');
-            sheet.classList.remove('hidden');
-            void sheet.offsetWidth; 
-            sheet.classList.remove('translate-y-full');
-        };
-
-        window.goToSetup = () => {
-            window.closeAllModals();
-            pendingRecords = []; 
-            document.getElementById('pendingList').innerHTML = '';
-            document.getElementById('memoInput').value = '';
-            const c = document.getElementById('modalNameList'); if(!c) return;
-            c.innerHTML = '';
-            members.forEach((m, idx) => {
-                const b = document.createElement('button');
-                const nameBgClass = `name-bg-${idx % 4}`;
-                b.className = `p-3 border rounded-xl font-bold bg-white text-xs truncate ${nameBgClass}`;
-                b.innerText = m;
-                b.onclick = (e) => {
-                    e.stopPropagation();
-                    document.querySelectorAll('#modalNameList button').forEach(btn => { 
-                        btn.style.borderColor = "#eee";
-                        btn.style.boxShadow = "none";
-                    });
-                    b.style.borderColor = "#fb7185";
-                    b.style.boxShadow = "0 0 10px rgba(251, 113, 133, 0.4)";
-                    tempMember = m;
-                };
-                c.appendChild(b);
-            });
-            const iSheet = document.getElementById('inputSheet');
-            iSheet.classList.remove('hidden');
-            void iSheet.offsetWidth;
-            iSheet.classList.remove('translate-y-full');
-            document.getElementById('overlay').classList.remove('hidden');
-        };
-
-        window.goToDetails = () => {
-            const container = document.getElementById('detailTableContainer');
-            const title = document.getElementById('detailDateTitle');
-            const dayParts = selectedDayKey.split('-');
-            title.innerText = `${dayParts[1]}월 ${dayParts[2]}일 상세 분석`;
-            container.innerHTML = '';
-            
-            const dayData = records[selectedDayKey] || {};
-            let hasData = false;
-
-            members.forEach((name, mIdx) => {
-                if(dayData[name]) {
-                    hasData = true;
-                    const nameBgClass = `name-bg-${mIdx % 4}`;
-                    const entries = Array.isArray(dayData[name]) ? dayData[name] : [dayData[name]];
-                    entries.forEach(entry => {
-                        let typeDetail = "";
-                        if(entry.type === 1) typeDetail = `휴무 (${entry.sub || '일반'})`;
-                        else if(entry.type === 2) typeDetail = "오전";
-                        else if(entry.type === 3) typeDetail = "오후";
-                        else if(entry.type === 4) typeDetail = `기타 (${entry.sub || '사유없음'})`;
-
-                        container.innerHTML += `
-                            <div class="p-4 ${nameBgClass} rounded-2xl border-b-2 border-slate-100/50">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-black text-slate-800">${name}</span>
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-2.5 h-2.5 rounded-full status-${entry.type}"></div>
-                                        <span class="text-sm font-bold text-slate-700">${typeDetail}</span>
-                                    </div>
-                                </div>
-                                ${entry.memo ? `<div class="mt-2 p-2 bg-white/60 rounded-lg text-xs font-bold text-slate-600 border border-slate-200 shadow-sm">📝 ${entry.memo}</div>` : ''}
-                            </div>`;
-                    });
-                }
-            });
-
-            if(!hasData) { container.innerHTML = `<div class="text-center py-10 text-slate-400 font-bold">등록된 데이터가 없습니다.</div>`; }
-
-            window.closeAllModals();
-            document.getElementById('overlay').classList.remove('hidden');
-            const dSheet = document.getElementById('detailSheet');
-            dSheet.classList.remove('hidden');
-            void dSheet.offsetWidth;
-            dSheet.classList.remove('translate-y-full');
-        };
-
-        window.syncSelection = (t) => {
-            tempType = t;
-            if (t === 1) tempSub = document.getElementById('offSelect').value;
-            else if (t === 4) tempSub = document.getElementById('etcSelect').value;
-            else tempSub = "";
-        };
-
-        window.addCurrentToPending = () => {
-            if(!tempMember || !tempType) { alert("멤버와 종류를 선택해주세요."); return; }
-            const memoVal = document.getElementById('memoInput').value.trim();
-            pendingRecords.push({member: tempMember, type: tempType, sub: tempSub, memo: memoVal});
-            
-            const tag = document.createElement('div');
-            tag.className = `px-3 py-1 rounded-lg text-[9px] font-black status-${tempType} text-white shadow-sm`;
-            tag.innerText = `${tempMember}: ${tempSub || (tempType===2?'오전':'오후')}`;
-            document.getElementById('pendingList').appendChild(tag);
-            
-            document.getElementById('offSelect').selectedIndex = 0;
-            document.getElementById('etcSelect').selectedIndex = 0;
-            document.getElementById('memoInput').value = "";
-            tempType = null; tempSub = "";
-        };
-
-        window.saveAllPending = async () => {
-            if(pendingRecords.length === 0) return;
-            let currentDayData = records[selectedDayKey] || {};
-            pendingRecords.forEach(p => {
-                if(!currentDayData[p.member]) currentDayData[p.member] = [];
-                if(!Array.isArray(currentDayData[p.member])) currentDayData[p.member] = [currentDayData[p.member]];
-                currentDayData[p.member].push({type: p.type, sub: p.sub, memo: p.memo});
-            });
-
-            if(db) {
-                toggleLoader(true, "저장 중...");
-                try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'holidays', selectedDayKey), currentDayData); } catch(e) {}
-                finally { toggleLoader(false); }
-            } else {
-                records[selectedDayKey] = currentDayData;
-                localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(records));
-                window.render();
-            }
-            window.closeAllModals();
-        };
-
-        window.clearDateRecord = async () => {
-            const b = document.getElementById('deleteBtn');
-            if(b.innerText.includes("정말")) {
-                if(db) {
-                    toggleLoader(true, "삭제 중...");
-                    try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'holidays', selectedDayKey)); } catch(e) {}
-                    finally { toggleLoader(false); }
-                } else {
-                    delete records[selectedDayKey];
-                    localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(records));
-                    window.render();
-                }
-                window.closeAllModals(); b.innerText = "Clear Data";
-            } else {
-                b.innerText = "🫧 정말 삭제?"; setTimeout(() => { if(b) b.innerText = "Clear Data"; }, 2500);
-            }
-        };
-
-        window.openNameSettings = () => {
-            const c = document.getElementById('nameEditContainer'); if(!c) return;
-            c.innerHTML = '';
-            members.forEach((m) => {
-                c.innerHTML += `<input type="text" value="${m}" class="name-edit-input w-full p-4 bg-slate-50 border rounded-xl font-bold mb-2 outline-none focus:border-rose-400">`;
-            });
-            document.getElementById('overlay').classList.remove('hidden');
-            const nModal = document.getElementById('nameModal');
-            nModal.classList.remove('hidden');
-            void nModal.offsetWidth;
-            nModal.classList.remove('translate-y-full');
-        };
-
-        window.applyNameChanges = async () => {
-            const newMembers = Array.from(document.querySelectorAll('.name-edit-input')).map(i => i.value.trim()).filter(v => v);
-            if(db) {
-                toggleLoader(true, "저장 중...");
-                try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'members'), { list: newMembers }); } finally { location.reload(); }
-            } else {
-                members = newMembers; localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(members));
-                window.render(); window.closeAllModals();
-            }
-        };
-
-        window.closeNameModal = window.closeAllModals;
-        window.closeModal = window.closeAllModals;
-
-        window.render = () => {
-            const grid = document.getElementById('calendar'); if(!grid) return; grid.innerHTML = '';
-            document.getElementById('monthTitle').innerText = `${year}.${String(month + 1).padStart(2, '0')}`;
-            const first = new Date(year, month, 1).getDay();
-            const last = new Date(year, month + 1, 0).getDate();
-            const todayK = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
-
-            for(let i=0; i<first; i++) grid.appendChild(document.createElement('div'));
-            
-            for(let d=1; d<=last; d++) {
-                const k = `${year}-${month+1}-${d}`;
-                const cell = document.createElement('div');
-                cell.className = `day-cell flex flex-col active:bg-rose-50 ${k === todayK ? 'is-today' : ''}`;
-                const dow = new Date(year, month, d).getDay();
-                cell.innerHTML = `<div class="text-[13px] font-black px-1 mb-1 ${dow===0?'text-rose-500':(dow===6?'text-blue-500':'text-slate-800')}">${d}</div>`;
-                
-                const list = document.createElement('div'); list.className = "flex flex-col gap-0.5 overflow-hidden text-left";
-                let dayHasMemo = false;
-
-                if(records[k]) {
-                    members.forEach((m, idx) => {
-                        if((currentFilter === 'all' || currentFilter === m) && records[k][m]) {
-                            const nameBgClass = `name-bg-${idx % 4}`;
-                            const items = Array.isArray(records[k][m]) ? records[k][m] : [records[k][m]];
-                            items.forEach(it => {
-                                if(it.memo) dayHasMemo = true;
-                                list.innerHTML += `<div class="entry-row ${nameBgClass} rounded"><div class="color-strip status-${it.type}"></div><span class="entry-name-label">${m}</span></div>`;
-                            });
-                        }
-                    });
-                }
-                if(dayHasMemo) cell.innerHTML += `<div class="memo-check">✅</div>`;
-                cell.appendChild(list);
-                cell.onclick = (e) => { 
-                    e.stopPropagation();
-                    window.openChoiceModal(k, d); 
-                };
-                grid.appendChild(cell);
-            }
-            updateStats(); updateFilterBar(); updateMemoPage();
-        };
-
-        const updateFilterBar = () => {
-            const fBar = document.getElementById('filterBar'); if(!fBar) return;
-            fBar.innerHTML = `<button onclick="window.setFilter('all')" id="filter-all" class="filter-btn ${currentFilter==='all'?'filter-active':''}">전체</button>`;
-            members.forEach((m, idx) => {
-                const safeId = m.replace(/\s+/g, '');
-                const nameBgClass = `name-bg-${idx % 4}`;
-                const b = document.createElement('button');
-                b.id = `filter-${safeId}`; b.className = `filter-btn ${nameBgClass} ${currentFilter===m?'filter-active':''}`;
-                b.innerText = m; b.onclick = () => window.setFilter(m);
-                fBar.appendChild(b);
-            });
-        };
-
-        const updateStats = () => {
-            const c = document.getElementById('statsContainer'); if(!c) return; c.innerHTML = '';
-            members.forEach((name, idx) => {
-                let s = { off: 0, am: 0, pm: 0, etc: 0 };
-                Object.keys(records).forEach(k => {
-                    if(records[k][name]) {
-                        const items = Array.isArray(records[k][name]) ? records[k][name] : [records[k][name]];
-                        items.forEach(it => { 
-                            if(it.type===1) s.off++; else if(it.type===2) s.am++; 
-                            else if(it.type===3) s.pm++; else if(it.type===4) s.etc++;
-                        });
-                    }
-                });
-                const nameBgClass = `name-bg-${idx % 4}`;
-                c.innerHTML += `
-                <div class="${nameBgClass} px-4 py-2.5 rounded-xl flex justify-between items-center shadow-sm">
-                    <span class="font-black text-slate-800 text-sm">${name}</span>
-                    <div class="flex gap-2 text-[9px] font-black">
-                        <span class="text-red-500">휴무 ${s.off}</span>
-                        <span class="text-amber-500">오전 ${s.am}</span>
-                        <span class="text-blue-500">오후 ${s.pm}</span>
-                        <span class="text-slate-500">기타 ${s.etc}</span>
-                    </div>
-                </div>`;
-            });
-        };
-
-        const updateMemoPage = () => {
-            const container = document.getElementById('memoListView');
-            let content = ""; let memoFound = false;
-            Object.keys(records).sort().reverse().forEach(k => {
-                const dayParts = k.split('-');
-                let dayMemoContent = "";
-                members.forEach(m => {
-                    if(records[k][m]) {
-                        const items = Array.isArray(records[k][m]) ? records[k][m] : [records[k][m]];
-                        items.forEach(it => { if(it.memo) { memoFound = true; dayMemoContent += `<div class="text-xs mb-1"><b>${m}:</b> ${it.memo}</div>`; } });
-                    }
-                });
-                if(dayMemoContent) content += `<div class="p-4 bg-white rounded-xl border border-slate-100 shadow-sm mb-3"><div class="text-[10px] font-black text-rose-400 mb-2 border-b border-rose-50 pb-1">${dayParts[1]}월 ${dayParts[2]}일</div>${dayMemoContent}</div>`;
-            });
-            if(memoFound) container.innerHTML = content;
-            else container.innerHTML = '<div class="p-10 text-center text-slate-400 font-bold text-sm">등록된 메모가 없습니다.</div>';
-        };
-
-        const init = async () => {
-            const localRec = localStorage.getItem(LOCAL_DB_KEY); if(localRec) records = JSON.parse(localRec);
-            const localMem = localStorage.getItem(LOCAL_SETTINGS_KEY); if(localMem) members = JSON.parse(localMem);
-            window.render();
-            if (typeof window.__firebase_config === 'undefined' || !window.__firebase_config) { toggleLoader(true, "⚠️ 오프라인 모드 활성"); setTimeout(() => toggleLoader(false), 1200); return; }
-            toggleLoader(true, "초기화 중...");
-            try {
-                const firebaseConfig = JSON.parse(window.__firebase_config);
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app); auth = getAuth(app);
-                if (window.__initial_auth_token) await signInWithCustomToken(auth, window.__initial_auth_token);
-                else await signInAnonymously(auth);
-                onAuthStateChanged(auth, async (u) => {
-                    if(u) {
-                        const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'members'));
-                        if(snap.exists()) members = snap.data().list;
-                        onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'holidays'), (s) => {
-                            records = {}; s.forEach(d => records[d.id] = d.data());
-                            window.render(); toggleLoader(false);
-                        });
-                    }
-                });
-            } catch(e) { toggleLoader(false); }
-        };
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
-            });
-        }
+        const LOCAL_DB_KEY = 'OFFICE_MANAGER_RECORDS_V5', LOCAL_SETTINGS_KEY = 'OFFICE_MANAGER_SETTINGS_V5', appId = typeof __app_id !== 'undefined' ? __app_id : 'office-manager-elite-3d';
+        let members = ['김혜진', '이민준', '박지성', '최지우'], records = {}, year = new Date().getFullYear(), month = new Date().getMonth(), selectedDayKey = '', currentFilter = 'all', tempMember = null, tempType = null, tempSub = "", pendingRecords = [], auth, db;
+        const toggleLoader = (show, text = "Syncing...") => { const l = document.getElementById('globalLoader'), t = document.getElementById('loaderStatus'); if(l && t) { t.innerText = text; l.style.display = show ? 'flex' : 'none'; } };
+        window.scrollToPage = (idx) => { const container = document.getElementById('viewContainer'); if(!container) return; container.scrollTo({ left: idx * container.clientWidth, behavior: 'smooth' }); [0,1,2].forEach(i => { const dot = document.getElementById(`dot${i}`); if(dot) dot.classList.toggle('active', i===idx); }); };
+        window.changeMonth = (v) => { month += v; if(month > 11) { month = 0; year++; } else if(month < 0) { month = 11; year--; } window.render(); };
+        window.setFilter = (f) => { currentFilter = f; window.render(); };
+        window.closeAllModals = () => { document.querySelectorAll('#choiceSheet, #inputSheet, #nameModal, #detailSheet').forEach(s => { s.classList.add('translate-y-full'); }); document.getElementById('overlay').classList.add('hidden'); };
+        window.openChoiceModal = (k, d) => { selectedDayKey = k; const title = document.getElementById('choiceDateTitle'); if(title) title.innerText = `${month+1}월 ${d}일 Action ✨`; document.getElementById('overlay').classList.remove('hidden'); const sheet = document.getElementById('choiceSheet'); sheet.classList.remove('hidden'); void sheet.offsetWidth; sheet.classList.remove('translate-y-full'); };
+        window.goToSetup = () => { window.closeAllModals(); pendingRecords = []; document.getElementById('pendingList').innerHTML = ''; document.getElementById('memoInput').value = ''; const c = document.getElementById('modalNameList'); if(!c) return; c.innerHTML = ''; members.forEach((m, idx) => { const b = document.createElement('button'); const nameBgClass = `name-bg-${idx % 4}`; b.className = `p-3 border rounded-xl font-bold bg-white text-xs truncate ${nameBgClass}`; b.innerText = m; b.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('#modalNameList button').forEach(btn => { btn.style.borderColor = "#eee"; btn.style.boxShadow = "none"; }); b.style.borderColor = "#fb7185"; b.style.boxShadow = "0 0 10px rgba(251, 113, 133, 0.4)"; tempMember = m; }; c.appendChild(b); }); const iSheet = document.getElementById('inputSheet'); iSheet.classList.remove('hidden'); void iSheet.offsetWidth; iSheet.classList.remove('translate-y-full'); document.getElementById('overlay').classList.remove('hidden'); };
+        window.goToDetails = () => { const container = document.getElementById('detailTableContainer'), title = document.getElementById('detailDateTitle'), dayParts = selectedDayKey.split('-'); title.innerText = `${dayParts[1]}월 ${dayParts[2]}일 상세 분석`; container.innerHTML = ''; const dayData = records[selectedDayKey] || {}; let hasData = false; members.forEach((name, mIdx) => { if(dayData[name]) { hasData = true; const nameBgClass = `name-bg-${mIdx % 4}`, entries = Array.isArray(dayData[name]) ? dayData[name] : [dayData[name]]; entries.forEach(entry => { let typeDetail = ""; if(entry.type === 1) typeDetail = `휴무 (${entry.sub || '일반'})`; else if(entry.type === 2) typeDetail = "오전"; else if(entry.type === 3) typeDetail = "오후"; else if(entry.type === 4) typeDetail = `기타 (${entry.sub || '사유없음'})`; container.innerHTML += `<div class="p-4 ${nameBgClass} rounded-2xl border-b-2 border-slate-100/50"><div class="flex items-center justify-between"><span class="font-black text-slate-800">${name}</span><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full status-${entry.type}"></div><span class="text-sm font-bold text-slate-700">${typeDetail}</span></div></div>${entry.memo ? `<div class="mt-2 p-2 bg-white/60 rounded-lg text-xs font-bold text-slate-600 border border-slate-200 shadow-sm">📝 ${entry.memo}</div>` : ''}</div>`; }); } }); if(!hasData) { container.innerHTML = `<div class="text-center py-10 text-slate-400 font-bold">데이터가 없습니다.</div>`; } window.closeAllModals(); document.getElementById('overlay').classList.remove('hidden'); const dSheet = document.getElementById('detailSheet'); dSheet.classList.remove('hidden'); void dSheet.offsetWidth; dSheet.classList.remove('translate-y-full'); };
+        window.syncSelection = (t) => { tempType = t; if (t === 1) tempSub = document.getElementById('offSelect').value; else if (t === 4) tempSub = document.getElementById('etcSelect').value; else tempSub = ""; };
+        window.addCurrentToPending = () => { if(!tempMember || !tempType) { alert("멤버와 종류를 선택해주세요."); return; } const memoVal = document.getElementById('memoInput').value.trim(); pendingRecords.push({member: tempMember, type: tempType, sub: tempSub, memo: memoVal}); const tag = document.createElement('div'); tag.className = `px-3 py-1 rounded-lg text-[9px] font-black status-${tempType} text-white shadow-sm`; tag.innerText = `${tempMember}: ${tempSub || (tempType===2?'오전':'오후')}`; document.getElementById('pendingList').appendChild(tag); document.getElementById('offSelect').selectedIndex = 0; document.getElementById('etcSelect').selectedIndex = 0; document.getElementById('memoInput').value = ""; tempType = null; tempSub = ""; };
+        window.saveAllPending = async () => { if(pendingRecords.length === 0) return; let currentDayData = records[selectedDayKey] || {}; pendingRecords.forEach(p => { if(!currentDayData[p.member]) currentDayData[p.member] = []; if(!Array.isArray(currentDayData[p.member])) currentDayData[p.member] = [currentDayData[p.member]]; currentDayData[p.member].push({type: p.type, sub: p.sub, memo: p.memo}); }); if(db) { toggleLoader(true); try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'holidays', selectedDayKey), currentDayData); } catch(e) {} finally { toggleLoader(false); } } else { records[selectedDayKey] = currentDayData; localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(records)); window.render(); } window.closeAllModals(); };
+        window.clearDateRecord = async () => { const b = document.getElementById('deleteBtn'); if(b.innerText.includes("정말")) { if(db) { toggleLoader(true); try { await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'holidays', selectedDayKey)); } catch(e) {} finally { toggleLoader(false); } } else { delete records[selectedDayKey]; localStorage.setItem(LOCAL_DB_KEY, JSON.stringify(records)); window.render(); } window.closeAllModals(); b.innerText = "Clear Data"; } else { b.innerText = "🫧 정말 삭제?"; setTimeout(() => { if(b) b.innerText = "Clear Data"; }, 2500); } };
+        window.openNameSettings = () => { const c = document.getElementById('nameEditContainer'); if(!c) return; c.innerHTML = ''; members.forEach((m) => { c.innerHTML += `<input type="text" value="${m}" class="name-edit-input w-full p-4 bg-slate-50 border rounded-xl font-bold mb-2 outline-none focus:border-rose-400">`; }); document.getElementById('overlay').classList.remove('hidden'); const nModal = document.getElementById('nameModal'); nModal.classList.remove('hidden'); void nModal.offsetWidth; nModal.classList.remove('translate-y-full'); };
+        window.applyNameChanges = async () => { const newMembers = Array.from(document.querySelectorAll('.name-edit-input')).map(i => i.value.trim()).filter(v => v); if(db) { toggleLoader(true); try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'members'), { list: newMembers }); } finally { location.reload(); } } else { members = newMembers; localStorage.setItem(LOCAL_SETTINGS_KEY, JSON.stringify(members)); window.render(); window.closeAllModals(); } };
+        window.closeNameModal = window.closeAllModals; window.closeModal = window.closeAllModals;
+        window.render = () => { const grid = document.getElementById('calendar'); if(!grid) return; grid.innerHTML = ''; document.getElementById('monthTitle').innerText = `${year}.${String(month + 1).padStart(2, '0')}`; const first = new Date(year, month, 1).getDay(), last = new Date(year, month + 1, 0).getDate(), todayK = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`; for(let i=0; i<first; i++) grid.appendChild(document.createElement('div')); for(let d=1; d<=last; d++) { const k = `${year}-${month+1}-${d}`, cell = document.createElement('div'); cell.className = `day-cell flex flex-col active:bg-rose-50 ${k === todayK ? 'is-today' : ''}`; const dow = new Date(year, month, d).getDay(); cell.innerHTML = `<div class="text-[13px] font-black px-1 mb-1 ${dow===0?'text-rose-500':(dow===6?'text-blue-500':'text-slate-800')}">${d}</div>`; const list = document.createElement('div'); list.className = "flex flex-col gap-0.5 overflow-hidden text-left"; let dayHasMemo = false; if(records[k]) { members.forEach((m, idx) => { if((currentFilter === 'all' || currentFilter === m) && records[k][m]) { const nameBgClass = `name-bg-${idx % 4}`, items = Array.isArray(records[k][m]) ? records[k][m] : [records[k][m]]; items.forEach(it => { if(it.memo) dayHasMemo = true; list.innerHTML += `<div class="entry-row ${nameBgClass} rounded"><div class="color-strip status-${it.type}"></div><span class="entry-name-label">${m}</span></div>`; }); } }); } if(dayHasMemo) cell.innerHTML += `<div class="memo-check">✅</div>`; cell.appendChild(list); cell.onclick = (e) => { e.stopPropagation(); window.openChoiceModal(k, d); }; grid.appendChild(cell); } updateStats(); updateFilterBar(); updateMemoPage(); };
+        const updateFilterBar = () => { const fBar = document.getElementById('filterBar'); if(!fBar) return; fBar.innerHTML = `<button onclick="window.setFilter('all')" id="filter-all" class="filter-btn ${currentFilter==='all'?'filter-active':''}">전체</button>`; members.forEach((m, idx) => { const safeId = m.replace(/\s+/g, ''), nameBgClass = `name-bg-${idx % 4}`, b = document.createElement('button'); b.id = `filter-${safeId}`; b.className = `filter-btn ${nameBgClass} ${currentFilter===m?'filter-active':''}`; b.innerText = m; b.onclick = () => window.setFilter(m); fBar.appendChild(b); }); };
+        const updateStats = () => { const c = document.getElementById('statsContainer'); if(!c) return; c.innerHTML = ''; members.forEach((name, idx) => { let s = { off: 0, am: 0, pm: 0, etc: 0 }; Object.keys(records).forEach(k => { if(records[k][name]) { const items = Array.isArray(records[k][name]) ? records[k][name] : [records[k][name]]; items.forEach(it => { if(it.type===1) s.off++; else if(it.type===2) s.am++; else if(it.type===3) s.pm++; else if(it.type===4) s.etc++; }); } }); const nameBgClass = `name-bg-${idx % 4}`; c.innerHTML += `<div class="${nameBgClass} px-4 py-2.5 rounded-xl flex justify-between items-center shadow-sm"><span class="font-black text-slate-800 text-sm">${name}</span><div class="flex gap-2 text-[9px] font-black"><span class="text-red-500">휴무 ${s.off}</span><span class="text-amber-500">오전 ${s.am}</span><span class="text-blue-500">오후 ${s.pm}</span><span class="text-slate-500">기타 ${s.etc}</span></div></div>`; }); };
+        const updateMemoPage = () => { const container = document.getElementById('memoListView'); let content = "", memoFound = false; Object.keys(records).sort().reverse().forEach(k => { const dayParts = k.split('-'); let dayMemoContent = ""; members.forEach(m => { if(records[k][m]) { const items = Array.isArray(records[k][m]) ? records[k][m] : [records[k][m]]; items.forEach(it => { if(it.memo) { memoFound = true; dayMemoContent += `<div class="text-xs mb-1"><b>${m}:</b> ${it.memo}</div>`; } }); } }); if(dayMemoContent) content += `<div class="p-4 bg-white rounded-xl border border-slate-100 shadow-sm mb-3"><div class="text-[10px] font-black text-rose-400 mb-2 border-b border-rose-50 pb-1">${dayParts[1]}월 ${dayParts[2]}일</div>${dayMemoContent}</div>`; }); if(memoFound) container.innerHTML = content; else container.innerHTML = '<div class="p-10 text-center text-slate-400 font-bold text-sm">등록된 메모가 없습니다.</div>'; };
+        const init = async () => { const localRec = localStorage.getItem(LOCAL_DB_KEY); if(localRec) records = JSON.parse(localRec); const localMem = localStorage.getItem(LOCAL_SETTINGS_KEY); if(localMem) members = JSON.parse(localMem); window.render(); if (typeof window.__firebase_config === 'undefined' || !window.__firebase_config) { toggleLoader(true, "⚠️ 오프라인 모드 활성"); setTimeout(() => toggleLoader(false), 1200); return; } toggleLoader(true, "시스템 초기화..."); try { const firebaseConfig = JSON.parse(window.__firebase_config); const app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); if (window.__initial_auth_token) await signInWithCustomToken(auth, window.__initial_auth_token); else await signInAnonymously(auth); onAuthStateChanged(auth, async (u) => { if(u) { const snap = await getDoc(doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'members')); if(snap.exists()) members = snap.data().list; onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'holidays'), (s) => { records = {}; s.forEach(d => records[d.id] = d.data()); window.render(); toggleLoader(false); }); } }); } catch(e) { toggleLoader(false); } };
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW failed:', err)); }); }
         init();
     </script>
 </body>
