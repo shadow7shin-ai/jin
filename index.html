@@ -6,7 +6,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#fdf2f8">
+    <meta name="theme-color" content="#fb7185">
+    
+    <!-- 안드로이드 홈 화면 예쁜 달력 아이콘 최적화 -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://cdn-icons-png.flaticon.com/512/1048/1048953.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://cdn-icons-png.flaticon.com/512/1048/1048953.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048953.png">
+    
     <title>Office Manager AI Elite 3D v5.3.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
@@ -36,35 +43,30 @@
         }
         .glass { background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-bottom: 1px solid rgba(251, 113, 133, 0.1); }
         
-        /* 헤더 최적화 */
         .header-row { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 5px 8px 0 8px; }
-        .month-box { display: flex; align-items: center; gap: 4px; background: white; padding: 4px 12px; border-radius: 1rem; border: 1.5px solid #fce7f3; box-shadow: 0 2px 8px rgba(251, 113, 133, 0.05); }
+        .month-display { display: flex; align-items: center; gap: 8px; background: white; padding: 4px 14px; border-radius: 1rem; border: 2px solid #fce7f3; }
+        .month-display h2 { font-size: 1.4rem; font-weight: 900; color: #1e293b; tracking-tighter: -0.05em; }
+
         .cyber-badge {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            border: 2px solid var(--accent-rose);
+            border: 2.5px solid var(--accent-rose);
             padding: 5px 12px; border-radius: 0.8rem; flex-shrink: 0;
         }
-        .cyber-badge span { font-size: 10px; font-weight: 900; color: white; font-style: italic; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px; }
+        .cyber-badge span { font-size: 10px; font-weight: 900; color: white; font-style: italic; white-space: nowrap; text-transform: uppercase; }
 
         .view-container { flex: 1; display: flex; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-        .view-page { width: 100%; height: 100%; flex-shrink: 0; scroll-snap-align: start; overflow-y: auto; padding-bottom: 80px; }
+        .view-page { width: 100%; height: 100%; flex-shrink: 0; scroll-snap-align: start; overflow-y: auto; padding-bottom: 90px; }
         .unified-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--grid-gap); width: calc(100% - 16px); margin: 0 auto; }
-        .weekday-label { text-align: center; font-weight: 900; font-size: 10px; color: #fb7185; opacity: 0.6; padding: 8px 0; }
+        .weekday-label { text-align: center; font-weight: 900; font-size: 10px; color: #fb7185; opacity: 0.6; padding: 10px 0; }
         .calendar-card { background: linear-gradient(145deg, #fce7f3, #e9d5ff); border-radius: 1.2rem; padding: 4px; margin: 0 8px; }
         
         .day-cell { 
-            height: 85px; 
-            background-color: white; 
-            padding: 4px; 
-            border-radius: 0.6rem; 
-            border-bottom: 4px solid #cbd5e1; 
-            transition: all 0.2s; 
-            position: relative; 
-            overflow: hidden;
+            height: 90px; background-color: white; padding: 4px; border-radius: 0.6rem; 
+            border-bottom: 4px solid #cbd5e1; transition: all 0.2s; position: relative; overflow: hidden;
         }
         .is-today { border-right: 2px solid #6ee7b7; border-bottom-color: #10b981; }
         
-        .entry-row { display: flex; align-items: center; gap: 2px; margin-bottom: 1px; border-radius: 2px; padding: 1px; }
+        .entry-row { display: flex; align-items: center; gap: 2px; margin-bottom: 2px; border-radius: 2px; padding: 1px; }
         .color-strip { width: 3px; height: 10px; border-radius: 1px; flex-shrink: 0; }
         .entry-name-label { font-size: 0.6rem; font-weight: 900; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -78,21 +80,21 @@
         .status-3 { background-color: var(--color-pm) !important; }
         .status-4 { background-color: var(--color-etc) !important; }
 
-        .filter-btn { padding: 5px 12px; border-radius: 0.6rem; font-size: 10px; font-weight: 900; background: white; border: 1.5px solid #f1f5f9; white-space: nowrap; }
-        .filter-active { border-color: var(--accent-rose) !important; color: #000 !important; box-shadow: 0 3px 8px rgba(251, 113, 133, 0.2); transform: translateY(-1px); }
+        .filter-btn { padding: 4px 10px; border-radius: 0.5rem; font-size: 10px; font-weight: 900; background: white; border: 1.5px solid #f1f5f9; white-space: nowrap; }
+        .filter-active { border-color: var(--accent-rose) !important; color: #000 !important; box-shadow: 0 2px 6px rgba(251, 113, 133, 0.2); }
         
         #globalLoader { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
         .loader-ring { width: 40px; height: 40px; border: 4px solid rgba(255,255,255,0.1); border-top-color: var(--accent-rose); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         
-        .legend-area { display: flex; justify-content: center; gap: 12px; margin-top: 12px; padding: 10px; background: white; border-radius: 1rem; margin-left: 12px; margin-right: 12px; border: 1px solid #f1f5f9; }
-        .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 900; color: #64748b; }
+        .legend-area { display: flex; justify-content: center; gap: 10px; margin-top: 15px; padding: 10px; background: white; border-radius: 0.8rem; margin-left: 8px; margin-right: 8px; border: 1px solid #f1f5f9; }
+        .legend-item { display: flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 900; color: #64748b; }
         .legend-strip { width: 4px; height: 10px; border-radius: 1px; }
 
         .dot { width: 6px; height: 6px; border-radius: 50%; background: #e2e8f0; }
         .dot.active { background: var(--accent-rose); width: 16px; }
 
-        .memo-check { position: absolute; top: 2px; right: 2px; font-size: 8px; color: #10b981; }
+        .memo-check { position: absolute; top: 2px; right: 2px; font-size: 9px; color: #10b981; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -102,18 +104,16 @@
     </div>
 
     <div class="app-wrapper">
-        <header class="glass sticky top-0 z-[100] px-2 pt-[calc(10px+var(--ios-safe-top))] pb-3 border-b flex flex-col gap-2">
+        <header class="glass sticky top-0 z-[100] px-3 pt-[calc(10px+var(--ios-safe-top))] pb-3 border-b flex flex-col gap-2">
             <div class="header-row">
-                <!-- 년월 크기 키움 및 한 줄 배치 -->
-                <div class="month-box">
-                    <button onclick="window.changeMonth(-1)" class="active:scale-90 text-rose-400 font-bold text-xl">◀</button>
-                    <h2 id="monthTitle" class="text-2xl font-black min-w-[100px] text-center tracking-tighter text-slate-800">2026.03</h2>
-                    <button onclick="window.changeMonth(1)" class="active:scale-90 text-rose-400 font-bold text-xl">▶</button>
+                <div class="month-display">
+                    <button onclick="window.changeMonth(-1)" class="active:scale-90 text-rose-400">◀</button>
+                    <h2 id="monthTitle">2026.03</h2>
+                    <button onclick="window.changeMonth(1)" class="active:scale-90 text-rose-400">▶</button>
                 </div>
                 <div class="cyber-badge"><span>Lovely Manager</span></div>
             </div>
-            <!-- 이름별 색상 필터 바 -->
-            <div id="filterBar" class="flex gap-1.5 overflow-x-auto no-scrollbar py-1 px-1">
+            <div id="filterBar" class="flex gap-1 overflow-x-auto no-scrollbar py-1">
                 <button onclick="window.setFilter('all')" id="filter-all" class="filter-btn filter-active">전체</button>
             </div>
         </header>
@@ -132,13 +132,11 @@
                 </div>
             </section>
 
-            <!-- 한국어 현황 영역 (빈공간 축소) -->
             <section class="view-page px-4 py-6 bg-white" id="pageStats">
-                <h3 class="font-black text-xl mb-4 text-slate-800 ml-1">📅 전사 현황</h3>
+                <h3 class="font-black text-lg mb-4 text-slate-800">📅 전사 현황</h3>
                 <div id="statsContainer" class="space-y-1.5"></div>
             </section>
 
-            <!-- 메모장 페이지 -->
             <section class="view-page px-5 py-6 bg-slate-50" id="pageMemo">
                 <h3 class="font-black text-xl mb-4 text-slate-800 italic">📌 통합 메모장</h3>
                 <div id="memoListView" class="space-y-3">
@@ -152,10 +150,10 @@
                 <div class="dot active" id="dot0"></div><div class="dot" id="dot1"></div><div class="dot" id="dot2"></div>
             </div>
             <div class="flex justify-around items-center">
-                <button onclick="window.scrollToPage(0)" class="flex flex-col items-center gap-1"><span class="text-[11px] font-black text-slate-600">달력</span></button>
-                <button onclick="window.scrollToPage(1)" class="flex flex-col items-center gap-1"><span class="text-[11px] font-black text-slate-600">현황</span></button>
-                <button onclick="window.scrollToPage(2)" class="flex flex-col items-center gap-1"><span class="text-[11px] font-black text-slate-600">메모</span></button>
-                <button onclick="window.openNameSettings()" class="flex flex-col items-center gap-1"><span class="text-[11px] font-black text-slate-600">관리</span></button>
+                <button onclick="window.scrollToPage(0)" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">달력</span></button>
+                <button onclick="window.scrollToPage(1)" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">현황</span></button>
+                <button onclick="window.scrollToPage(2)" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">메모</span></button>
+                <button onclick="window.openNameSettings()" class="flex flex-col items-center"><span class="text-[11px] font-black text-slate-600">관리</span></button>
             </div>
         </footer>
     </div>
@@ -164,7 +162,7 @@
     <div id="overlay" class="fixed inset-0 bg-black/60 hidden z-[900]" onclick="window.closeAllModals()"></div>
     
     <div id="choiceSheet" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-8 transform translate-y-full transition-all duration-300 z-[1000] shadow-2xl mx-auto max-w-[430px]">
-        <h3 id="choiceDateTitle" class="text-center font-black text-lg mb-6 text-slate-800 italic">Action Choice</h3>
+        <h3 id="choiceDateTitle" class="text-center font-black text-lg mb-6 tracking-tighter text-slate-800 italic">Action Choice</h3>
         <div class="flex flex-col gap-3">
             <button onclick="window.goToSetup()" class="py-4 bg-black text-white rounded-2xl font-black">🎀 일정 및 메모 설정</button>
             <button onclick="window.goToDetails()" class="py-4 bg-white border-2 border-slate-100 rounded-2xl font-black text-slate-800">✨ 날짜 상세 분석</button>
@@ -177,29 +175,26 @@
         <h3 class="text-center font-black mb-6 text-slate-800">데이터 입력</h3>
         <div class="space-y-5">
             <div class="grid grid-cols-2 gap-2" id="modalNameList"></div>
-            <!-- 입력 레이아웃 최적화 -->
             <div class="grid grid-cols-4 gap-1">
-                <select id="offSelect" onchange="window.syncSelection(1)" class="p-2 bg-red-500 text-white font-bold rounded-xl text-[10px] appearance-none text-center outline-none">
+                <select id="offSelect" onchange="window.syncSelection(1)" class="p-2 bg-red-500 text-white font-bold rounded-xl text-[10px] appearance-none text-center">
                     <option value="">휴무▼</option>
                     <option value="일반">일반</option><option value="연차">연차</option><option value="감정">감정</option><option value="보상">보상</option><option value="병가">병가</option><option value="경조">경조</option><option value="난임">난임</option>
                 </select>
-                <button onclick="window.syncSelection(2)" id="btnAM" class="bg-amber-400 text-white font-bold rounded-xl text-[10px] py-3 active:scale-95 transition-all">오전</button>
-                <button onclick="window.syncSelection(3)" id="btnPM" class="bg-blue-500 text-white font-bold rounded-xl text-[10px] py-3 active:scale-95 transition-all">오후</button>
-                <select id="etcSelect" onchange="window.syncSelection(4)" class="p-2 bg-slate-400 text-white font-bold rounded-xl text-[10px] appearance-none text-center outline-none">
+                <button onclick="window.syncSelection(2)" id="btnAM" class="bg-amber-400 text-white font-bold rounded-xl text-[10px] py-3">오전</button>
+                <button onclick="window.syncSelection(3)" id="btnPM" class="bg-blue-500 text-white font-bold rounded-xl text-[10px] py-3">오후</button>
+                <select id="etcSelect" onchange="window.syncSelection(4)" class="p-2 bg-slate-400 text-white font-bold rounded-xl text-[10px] appearance-none text-center">
                     <option value="">기타▼</option>
                     <option value="본사교육">본사교육</option><option value="노조교육">노조교육</option><option value="영업회의">영업회의</option><option value="워크샵">워크샵</option>
                 </select>
             </div>
-            <div>
-                <input type="text" id="memoInput" placeholder="간단한 메모 입력..." class="w-full px-4 py-3 bg-slate-50 border-2 border-transparent rounded-xl font-bold text-sm outline-none focus:border-rose-300">
-            </div>
-            <button onclick="window.addCurrentToPending()" class="w-full py-4 bg-emerald-500 text-white font-black rounded-2xl shadow-md active:scale-95 transition-all">목록에 추가 ✨</button>
+            <div><input type="text" id="memoInput" placeholder="메모 입력..." class="w-full px-4 py-3 bg-slate-50 border-2 border-transparent rounded-xl font-bold text-sm outline-none focus:border-rose-300"></div>
+            <button onclick="window.addCurrentToPending()" class="w-full py-4 bg-emerald-500 text-white font-black rounded-2xl shadow-md">목록에 추가 ✨</button>
             <div id="pendingList" class="flex flex-wrap gap-2 p-4 bg-slate-50/50 rounded-2xl border-2 border-dashed border-slate-200 min-h-[50px]"></div>
             <div class="grid grid-cols-2 gap-3"><button onclick="window.saveAllPending()" class="py-4 bg-slate-900 text-white rounded-2xl font-black">저장</button><button onclick="window.closeAllModals()" class="py-4 bg-slate-100 rounded-2xl font-black">취소</button></div>
         </div>
     </div>
 
-    <div id="detailSheet" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-8 transform translate-y-full transition-all duration-300 z-[1002] max-h-[92vh] overflow-y-auto no-scrollbar shadow-2xl mx-auto max-w-[430px]">
+    <div id="detailSheet" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[2.5rem] p-10 transform translate-y-full transition-all duration-300 z-[1002] max-h-[92vh] overflow-y-auto no-scrollbar shadow-2xl mx-auto max-w-[430px]">
         <h3 id="detailDateTitle" class="text-xl font-black text-center text-slate-800 mb-8 italic">날짜 상세 분석</h3>
         <div id="detailTableContainer" class="space-y-4 mb-10"></div>
         <button onclick="window.closeAllModals()" class="w-full py-5 bg-black text-white rounded-2xl font-black text-lg">닫기</button>
@@ -238,7 +233,6 @@
             if(l && t) { t.innerText = text; l.style.display = show ? 'flex' : 'none'; }
         };
 
-        // --- 전역 함수 바인딩 ---
         window.scrollToPage = (idx) => {
             const container = document.getElementById('viewContainer');
             if(!container) return;
@@ -264,7 +258,6 @@
         window.closeAllModals = () => {
             document.querySelectorAll('#choiceSheet, #inputSheet, #nameModal, #detailSheet').forEach(s => {
                 s.classList.add('translate-y-full');
-                setTimeout(() => s.classList.add('hidden'), 300);
             });
             document.getElementById('overlay').classList.add('hidden');
         };
@@ -272,7 +265,8 @@
         window.openChoiceModal = (k, d) => {
             selectedDayKey = k;
             const title = document.getElementById('choiceDateTitle');
-            if(title) title.innerText = `${month+1}월 ${d}일 Action Choice ✨`;
+            if(title) title.innerText = `${month+1}월 ${d}일 Action ✨`;
+            
             document.getElementById('overlay').classList.remove('hidden');
             const sheet = document.getElementById('choiceSheet');
             sheet.classList.remove('hidden');
@@ -292,7 +286,8 @@
                 const nameBgClass = `name-bg-${idx % 4}`;
                 b.className = `p-3 border rounded-xl font-bold bg-white text-xs truncate ${nameBgClass}`;
                 b.innerText = m;
-                b.onclick = () => {
+                b.onclick = (e) => {
+                    e.stopPropagation();
                     document.querySelectorAll('#modalNameList button').forEach(btn => { 
                         btn.style.borderColor = "#eee";
                         btn.style.boxShadow = "none";
@@ -316,7 +311,6 @@
             const dayParts = selectedDayKey.split('-');
             title.innerText = `${dayParts[1]}월 ${dayParts[2]}일 상세 분석`;
             container.innerHTML = '';
-            
             const dayData = records[selectedDayKey] || {};
             let hasData = false;
 
@@ -341,14 +335,12 @@
                                         <span class="text-sm font-bold text-slate-700">${typeDetail}</span>
                                     </div>
                                 </div>
-                                ${entry.memo ? `<div class="mt-2 p-2 bg-white/70 rounded-lg text-xs font-bold text-slate-600 border border-slate-200 shadow-sm">📝 ${entry.memo}</div>` : ''}
+                                ${entry.memo ? `<div class="mt-2 p-2 bg-white/60 rounded-lg text-xs font-bold text-slate-600 border border-slate-200 shadow-sm">📝 ${entry.memo}</div>` : ''}
                             </div>`;
                     });
                 }
             });
-
             if(!hasData) { container.innerHTML = `<div class="text-center py-10 text-slate-400 font-bold">데이터가 없습니다.</div>`; }
-
             window.closeAllModals();
             document.getElementById('overlay').classList.remove('hidden');
             const dSheet = document.getElementById('detailSheet');
@@ -368,12 +360,10 @@
             if(!tempMember || !tempType) { alert("멤버와 종류를 선택해주세요."); return; }
             const memoVal = document.getElementById('memoInput').value.trim();
             pendingRecords.push({member: tempMember, type: tempType, sub: tempSub, memo: memoVal});
-            
             const tag = document.createElement('div');
             tag.className = `px-3 py-1 rounded-lg text-[9px] font-black status-${tempType} text-white shadow-sm`;
             tag.innerText = `${tempMember}: ${tempSub || (tempType===2?'오전':'오후')}`;
             document.getElementById('pendingList').appendChild(tag);
-            
             document.getElementById('offSelect').selectedIndex = 0;
             document.getElementById('etcSelect').selectedIndex = 0;
             document.getElementById('memoInput').value = "";
@@ -388,7 +378,6 @@
                 if(!Array.isArray(currentDayData[p.member])) currentDayData[p.member] = [currentDayData[p.member]];
                 currentDayData[p.member].push({type: p.type, sub: p.sub, memo: p.memo});
             });
-
             if(db) {
                 toggleLoader(true);
                 try { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'holidays', selectedDayKey), currentDayData); } catch(e) {}
@@ -452,19 +441,15 @@
             const first = new Date(year, month, 1).getDay();
             const last = new Date(year, month + 1, 0).getDate();
             const todayK = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
-
             for(let i=0; i<first; i++) grid.appendChild(document.createElement('div'));
-            
             for(let d=1; d<=last; d++) {
                 const k = `${year}-${month+1}-${d}`;
                 const cell = document.createElement('div');
                 cell.className = `day-cell flex flex-col active:bg-rose-50 ${k === todayK ? 'is-today' : ''}`;
                 const dow = new Date(year, month, d).getDay();
                 cell.innerHTML = `<div class="text-[13px] font-black px-1 mb-1 ${dow===0?'text-rose-500':(dow===6?'text-blue-500':'text-slate-800')}">${d}</div>`;
-                
                 const list = document.createElement('div'); list.className = "flex flex-col gap-0.5 overflow-hidden text-left";
                 let dayHasMemo = false;
-
                 if(records[k]) {
                     members.forEach((m, idx) => {
                         if((currentFilter === 'all' || currentFilter === m) && records[k][m]) {
@@ -479,7 +464,10 @@
                 }
                 if(dayHasMemo) cell.innerHTML += `<div class="memo-check">✅</div>`;
                 cell.appendChild(list);
-                cell.onclick = () => { cell.classList.add('pop-forward'); setTimeout(() => { window.openChoiceModal(k, d); setTimeout(() => cell.classList.remove('pop-forward'), 400); }, 100); };
+                cell.onclick = (e) => { 
+                    e.stopPropagation();
+                    window.openChoiceModal(k, d); 
+                };
                 grid.appendChild(cell);
             }
             updateStats(); updateFilterBar(); updateMemoPage();
@@ -539,7 +527,7 @@
             const localMem = localStorage.getItem(LOCAL_SETTINGS_KEY); if(localMem) members = JSON.parse(localMem);
             window.render();
             if (typeof window.__firebase_config === 'undefined' || !window.__firebase_config) { toggleLoader(true, "⚠️ 오프라인 모드 활성"); setTimeout(() => toggleLoader(false), 1200); return; }
-            toggleLoader(true, "시스템 초기화...");
+            toggleLoader(true, "초기화 중...");
             try {
                 const firebaseConfig = JSON.parse(window.__firebase_config);
                 const app = initializeApp(firebaseConfig);
@@ -558,6 +546,11 @@
                 });
             } catch(e) { toggleLoader(false); }
         };
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration failed:', err));
+            });
+        }
         init();
     </script>
 </body>
